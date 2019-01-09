@@ -1,4 +1,4 @@
-const express = require('expree')
+const express = require('express')
 const jwt = require('jsonwebtoken')
 
 const { verifyToken } = require('./middlewares')
