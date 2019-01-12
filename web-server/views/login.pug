@@ -1,0 +1,21 @@
+doctype
+html
+  head
+    meta(charset='UTF-8')
+    title= title
+    meta(name='viewport' content='width=device-width, user-scalable=no')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+  body
+    form#login-form(action='/auth/login' method='post')
+    .input-group
+    label(for='id') ID
+    input#email(type='text' name='id' required autofocus)
+    .input-group
+    label(for='password') 비밀번호
+    input#password(type='password' name='password' required)
+    if loginError
+    .error-message= loginError
+    a#join.btn(href='/join') 회원가입
+    button#login.btn(type='submit') 로그인
+block content

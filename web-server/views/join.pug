@@ -1,0 +1,14 @@
+extends login
+
+block content
+  .timeline
+    form#join-form(action='/auth/join' method='post')
+      .input-group
+        label(for='join-id') ID
+        input#join-email(type='text' name='id')
+      .input-group
+        label(for='join-password') PASSWORD
+        input#join-password(type='password' name='password')
+      if joinError
+        .error-message= joinError
+      button#join-btn.btn(type='submit') JOIN
