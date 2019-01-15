@@ -13,6 +13,7 @@ router.post('/login', async (req, res, next) => {
         API_Call.login(user_id, password, function(err, ruselt){
             if(!error){
                 res.json(result);
+                res.render('main', { title: MAIN });
             } else {
                 res.json(err);
             }
@@ -29,13 +30,19 @@ router.post('/join', async (req, res, next) => {
 
         API_Call.login(user_id, password, function(err, ruselt){
             if(!error){
-                res.json(result);
+                if(result == success){
+                    res.send("회원가입에 성공하였습니다. 다시 로그인 해주세요.");
+                    res.redirect('login', { title: 'LOGIN' });
+                }
+                else{
+                    res.send("회원가입에 실패하였습니다.");
+                    res.redirect('join', { title: 'JOIN' });
+                }
             } else {
                 res.json(err);
             }
         });
     });
-    res.send();
 });
 
 module.exports = router;
