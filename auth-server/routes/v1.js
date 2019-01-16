@@ -13,7 +13,7 @@ router.post('/login', (req, res, next) => {
         console.log(id);
         if(authError) {
             console.error(loginError);
-            return next(loginError);
+            return next(loginError); 
         }
         if(!id) {
             req.flash('loginError', info.message);
@@ -57,24 +57,25 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/join', (req, res, next) => {
-    const user_id = req.body.id;
+    console.log(req.body);
+    const user_id = req.body.user_id;
     const user_pw = req.body.password;
     const salt = crypto.randomBytes(16).toString('base64');
     const encryptPW = crypto.pbkdf2Sync(user_pw, salt, 2048, 64, 'sha512').toString('base64');
 
-    db.query('INSERT INTO users(id, password, salt) VALUES (?, ?, ?)', [user_id, encryptPW, salt]), (req, res, next) => {
+    db.query('INSERT INTO users (id, password, salt) VALUES (?, ?, ?)', [user_id, encryptPW, salt], (err, result, next) => {
         if(err){
             console.log("error");
             console.log('err : ' + err);
         } else {
             // console.log("success");
-            // console.log(res);
-            // res.send("success");
-            //res.json({success: json});
-            res.status(200).end();
-            
+            // console.log(result);
+            // res.send(result);
+            res.send({result: 'success'});
+            // res.json({success: json});
+            // res.status(200).end();            
         }
-    }
+    });
 });
 
 module.exports = router;
